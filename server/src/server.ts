@@ -4,6 +4,7 @@ import { Server as ServerIO } from 'socket.io';
 import cors from 'cors';
 import { envs } from './config/envs';
 import { Sockets } from './sockets';
+import { dbConnection } from './database/config';
 
 export class Server {
 
@@ -34,10 +35,16 @@ export class Server {
 		new Sockets(this.io);
 	}
 
-	execute() {
+	async configDatabase () {
+		await dbConnection();
+	}
+
+	async execute() {
 		this.middlewares();
 
 		this.configSockets();
+
+		await this.configDatabase();
 
 		this.server.listen(this.port, () => {
 			console.log('Server running at port:', this.port);
