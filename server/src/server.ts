@@ -5,6 +5,7 @@ import cors from 'cors';
 import { envs } from './config/envs';
 import { Sockets } from './sockets';
 import { dbConnection } from './database/config';
+import { authRouter } from './router/auth.router';
 
 export class Server {
 
@@ -24,19 +25,22 @@ export class Server {
 				origin: envs.CORS
 			}
 		});
-
 	}
 
-	middlewares() {
+	private middlewares() {
 		this.app.use(cors());
 	}
 
-	configSockets() {
+	private configSockets() {
 		new Sockets(this.io);
 	}
 
-	async configDatabase () {
+	private async configDatabase () {
 		await dbConnection();
+	}
+
+	private configRoutes() {
+		this.app.use('/api/auth', authRouter);
 	}
 
 	async execute() {
@@ -45,6 +49,8 @@ export class Server {
 		this.configSockets();
 
 		await this.configDatabase();
+
+		this.configRoutes();
 
 		this.server.listen(this.port, () => {
 			console.log('Server running at port:', this.port);
