@@ -1,25 +1,26 @@
-let jwt = 'your-jwt-token'; // replace with your JWT
-let isRefreshing = false;
-let failedQueue = [];
+let jwt: string = 'your-jwt-token'; // replace with your JWT
+let isRefreshing: boolean = false;
+let failedQueue: Array<{ resolve: (value: string | PromiseLike<string>) => void, reject: (reason?: unknown) => void }> = [];
 
-const processQueue = (error, newToken = null) => {
+const processQueue = (error: unknown, newToken: string | null) => {
 	failedQueue.forEach(prom => {
 		if (error) {
 			prom.reject(error);
 		} else {
-			prom.resolve(newToken);
+			prom.resolve(newToken!);
 		}
 	});
 
 	failedQueue = [];
 };
 
-async function request(url, options) {
-	options.headers = options.headers || {};
-	options.headers['Authorization'] = 'Bearer ' + jwt;
-	options.headers['Content-Type'] = 'application/json';
+export async function request(url: RequestInfo, options?: RequestInit) {
+	options = options || {};
+	options.headers = options.headers instanceof Headers ? options.headers : new Headers();
+	options.headers.set('Authorization', 'Bearer ' + jwt);
+	options.headers.set('Content-Type', 'application/json');
 
-	let response = await fetch(url, options);
+	const response = await fetch(url, options);
 
 	if (response.status === 401) { // Unauthorized
 		if (!isRefreshing) {
@@ -45,7 +46,9 @@ async function request(url, options) {
 		return new Promise((resolve, reject) => {
 			failedQueue.push({ resolve, reject });
 		}).then(token => {
-			options.headers['Authorization'] = 'Bearer ' + token;
+			if (options && options.headers instanceof Headers) {
+				options.headers.set('Authorization', 'Bearer ' + token);
+			}
 			return fetch(url, options);
 		});
 	}
