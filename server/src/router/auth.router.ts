@@ -1,15 +1,10 @@
 import { Router } from 'express'
+import { createUser, loginUser, renewToken } from '../controllers';
 
 export const authRouter = Router();
 
-authRouter.post('/new', (req, res) => {
-	res.send('new');
-});
+authRouter.post('/new', createUser);
 
-authRouter.post('/login', (req, res) => {
-	res.send('login');
-});
+authRouter.post('/login', loginUser);
 
-authRouter.get('/renew', (req, res) => {
-	res.send('renew');
-});
+authRouter.get('/renew', renewToken);
