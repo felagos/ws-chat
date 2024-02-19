@@ -13,8 +13,7 @@ export const tokenValidation = async (req: Request, res: Response, next: NextFun
 
 		const [, token] = header.split(' ');
 
-		const decoded = jwt.verify(token, envs.JWY_KEY);
-		req.body.user = decoded;
+		jwt.verify(token, envs.JWY_KEY);
 
 		next();
 	} catch (error) {
