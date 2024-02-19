@@ -29,6 +29,7 @@ export class Server {
 
 	private middlewares() {
 		this.app.use(cors());
+		this.app.use(express.json());
 	}
 
 	private configSockets() {
