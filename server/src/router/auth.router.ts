@@ -1,8 +1,11 @@
 import { Router } from 'express'
 import { createUser, loginUser, renewToken } from '../controllers';
 import { validateRequest, createUserSchema } from '../middlewares';
+import { tokenValidation } from '../middlewares/token.middleware';
 
 export const authRouter = Router();
+
+authRouter.use(tokenValidation);
 
 authRouter.post('/new', validateRequest(createUserSchema), createUser);
 
