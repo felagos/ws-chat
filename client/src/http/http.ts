@@ -20,7 +20,7 @@ const processQueue = (error: Error | null, token: string | null) => {
   failedQueue = [];
 };
 
-export const fetchWithAuthentication = async (url: string, options: RequestInit): Promise<Response> => {
+export const apiPrivate = async (url: string, options: RequestInit): Promise<Response> => {
   let jwt = localStorage.getItem('token');
 
   if (!jwt || jwtIsExpired(jwt)) {
@@ -60,5 +60,6 @@ export const fetchWithAuthentication = async (url: string, options: RequestInit)
   if (options && options.headers instanceof Headers) {
     options.headers.set('Authorization', 'Bearer ' + jwt);
   }
+  
   return fetch(url, options);
 };
