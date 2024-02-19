@@ -5,8 +5,6 @@ import { tokenValidation } from '../middlewares/token.middleware';
 
 export const authRouter = Router();
 
-authRouter.use(tokenValidation);
-
 authRouter.post('/new', validateRequest(createUserSchema), createUser);
 
 authRouter.post('/login', loginUser);
