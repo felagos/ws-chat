@@ -5,7 +5,7 @@ import cors from 'cors';
 import { envs } from './config/envs';
 import { Sockets } from './sockets';
 import { dbConnection } from './database/config';
-import { authRouter } from './router/auth.router';
+import { authRouter } from './router';
 
 export class Server {
 
