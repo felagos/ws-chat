@@ -46,7 +46,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 			return;
 		}
 
-		res.json({
+		res.status(200).json({
 			user,
 			token: JwtHelper.generateToken(user),
 		});
