@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { CreateUserDto } from '../dto';
+import { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../services';
-import { EncryptHelper } from '../helpers';
+import { EncryptHelper, JwtHelper } from '../helpers';
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	try {
@@ -17,7 +17,10 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 		const user = await AuthService.createUser(createUserDto);
 
-		res.status(201).json(user);
+		res.status(201).json({
+			user,
+			token: JwtHelper.generateToken(user),
+		});
 
 	} catch (error) {
 		console.log(error);
@@ -26,7 +29,32 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 };
 
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
-	res.json({ message: 'User logged in' });
+	try {
+		const loginDto: LoginDto = req.body;
+
+		const user = await AuthService.getUserByEmail(loginDto.email);
+
+		if (!user) {
+			res.status(404).json({ message: 'User not found' });
+			return;
+		}
+
+		const arePasswordEquals = await AuthService.arePasswordEquals(loginDto.password, user.password ?? '');
+
+		if(!arePasswordEquals) {
+			res.status(401).json({ message: 'Wrong credentials' });
+			return;
+		}
+
+		res.json({
+			user,
+			token: JwtHelper.generateToken(user),
+		});
+
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: 'Internal server error' });
+	}
 };
 
 export const renewToken = async (req: Request, res: Response): Promise<void> => {
