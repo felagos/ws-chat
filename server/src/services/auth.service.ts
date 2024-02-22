@@ -17,7 +17,7 @@ class AuthService {
 		return {
 			email: user.email,
 			name: user.name,
-			uuid: user._id.toString(),
+			uid: user._id.toString(),
 			password: user.password
 		}
 	}
@@ -29,7 +29,7 @@ class AuthService {
 		return {
 			email: user.email,
 			name: user.name,
-			uuid: user._id.toString()
+			uid: user._id.toString()
 		};
 	}
 

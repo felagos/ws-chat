@@ -14,6 +14,7 @@ export const tokenValidation = async (req: Request, res: Response, next: NextFun
 		const [, token] = header.split(' ');
 
 		jwt.verify(token, envs.JWY_KEY);
+		//req.uid = uid;
 
 		next();
 	} catch (error) {
