@@ -9,6 +9,18 @@ class AuthService {
 		return user !== null;
 	};
 
+	getUserById = async (uid: string): Promise<UserDto | null> => {
+		const user = await User.findById(uid);
+
+		if (!user) return null;
+
+		return {
+			email: user.email,
+			name: user.name,
+			uid: user._id.toString()
+		}
+	}
+
 	getUserByEmail = async (email: string): Promise<UserDto | null> => {
 		const user = await User.findOne({ email });
 

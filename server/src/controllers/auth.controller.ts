@@ -3,6 +3,8 @@ import { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../services';
 import { EncryptHelper, JwtHelper } from '../helpers';
 
+type RequestWithUid = { uid: string } & Request;
+
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const createUserDto: CreateUserDto = req.body;
@@ -41,7 +43,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 		const arePasswordEquals = await AuthService.arePasswordEquals(loginDto.password, user.password ?? '');
 
-		if(!arePasswordEquals) {
+		if (!arePasswordEquals) {
 			res.status(401).json({ message: 'Wrong credentials' });
 			return;
 		}
@@ -57,6 +59,18 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 	}
 };
 
-export const renewToken = async (req: Request, res: Response): Promise<void> => {
-	res.json({ message: 'Token renewed successfully' });
+export const renewToken = async (req: RequestWithUid, res: Response): Promise<void> => {
+	const uid = req.uid;
+
+	const user = await AuthService.getUserById(uid);
+
+	if (!user) {
+		res.status(404).json({ message: 'User not found' });
+		return;
+	}
+
+	res.status(200).json({
+		user,
+		token: JwtHelper.generateToken(user),
+	});
 };
