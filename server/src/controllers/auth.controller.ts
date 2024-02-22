@@ -3,7 +3,9 @@ import { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../services';
 import { EncryptHelper, JwtHelper } from '../helpers';
 
-type RequestWithUid = { uid: string } & Request;
+interface RequestWithUid extends Request {
+	uid: string;
+}
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	try {
@@ -59,8 +61,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 	}
 };
 
-export const renewToken = async (req: RequestWithUid, res: Response): Promise<void> => {
-	const uid = req.uid;
+export const renewToken = async (req: Request, res: Response): Promise<void> => {
+	const reqWithId = req as RequestWithUid;
+	const uid = reqWithId.uid;
 
 	const user = await AuthService.getUserById(uid);
 
