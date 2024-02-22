@@ -2,10 +2,7 @@ import { Request, Response } from 'express'
 import { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../services';
 import { EncryptHelper, JwtHelper } from '../helpers';
-
-interface RequestWithUid extends Request {
-	uid: string;
-}
+import { RequestWithUid } from '../types';
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
 	try {
