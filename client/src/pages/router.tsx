@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { LoginPage, ChatPage, RegisterPage } from ".";
 import { RoutesEnum } from "../enum";
 import { Layout } from "../component";
@@ -8,8 +8,11 @@ const router = createBrowserRouter([
 		path: "/",
 		element: <Layout />,
 		children: [
+			{ 
+				index: true, 
+				element: <Navigate to={RoutesEnum.LOGIN} replace />
+			},
 			{
-				index: true,
 				path: RoutesEnum.LOGIN,
 				element: <LoginPage />,
 			},
