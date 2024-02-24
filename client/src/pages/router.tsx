@@ -1,7 +1,7 @@
-import { Layout } from "antd";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage, ChatPage } from ".";
 import { RoutesEnum } from "../enum";
+import { Layout } from "../component";
 
 const router = createBrowserRouter([
 	{
