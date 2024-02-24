@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { RoutesEnum } from "../../enum";
+
 export const LoginPage = () => {
 	return (
 		<form className="login100-form validate-form flex-sb flex-w">
@@ -25,9 +28,9 @@ export const LoginPage = () => {
 				</div>
 
 				<div className="col text-right">
-					<a href="register.html" className="u-txt">
+					<Link to={RoutesEnum.REGISTER} className="u-txt">
 						Nueva cuenta?
-					</a>
+					</Link>
 				</div>
 			</div>
 
