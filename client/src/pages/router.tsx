@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginPage, ChatPage } from ".";
+import { LoginPage, ChatPage, RegisterPage } from ".";
 import { RoutesEnum } from "../enum";
 import { Layout } from "../component";
 
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
 				path: RoutesEnum.CHAT,
 				element: <ChatPage />,
 			},
+			{
+				path: RoutesEnum.REGISTER,
+				element: <RegisterPage />,
+			}
 		]
 	},
 ]);
