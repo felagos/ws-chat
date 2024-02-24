@@ -9,8 +9,8 @@ const router = createBrowserRouter([
 		path: "/",
 		element: <Layout />,
 		children: [
-			{ 
-				index: true, 
+			{
+				index: true,
 				element: <Navigate to={RoutesEnum.LOGIN} replace />
 			},
 			{
