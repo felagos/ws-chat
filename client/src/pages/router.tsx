@@ -1,14 +1,13 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { LoginPage, ChatPage, RegisterPage } from ".";
 import { RoutesEnum } from "../enum";
-import { Layout } from "../component";
-import { ProtectedRoute } from "./protected-route";
-import { PublicRoute } from "./public-route";
+import { PublicLayout, PrivateLayout } from "../component";
+import { jwtIsExpired } from "../helpers";
 
-const router = createBrowserRouter([
+const publicRouter = createBrowserRouter([
 	{
 		path: "/",
-		element: <Layout />,
+		element: <PublicLayout />,
 		children: [
 			{
 				index: true,
@@ -16,11 +15,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: RoutesEnum.LOGIN,
-				element: <PublicRoute element={LoginPage} />,
-			},
-			{
-				path: RoutesEnum.CHAT,
-				element: <ProtectedRoute element={ChatPage} />,
+				element: <LoginPage />,
 			},
 			{
 				path: RoutesEnum.REGISTER,
@@ -29,6 +24,28 @@ const router = createBrowserRouter([
 		]
 	},
 ]);
+
+const privateRouter = createBrowserRouter([
+	{
+		path: "/",
+		element: <PrivateLayout />,
+		children: [
+			{
+				index: true,
+				element: <Navigate to={RoutesEnum.CHAT} replace />
+			},
+			{
+				path: RoutesEnum.CHAT,
+				element: <ChatPage />,
+			},
+		]
+	},
+]);
+
+const token = localStorage.getItem("token");
+const isExpired = jwtIsExpired(token);
+
+const router = isExpired ? publicRouter : privateRouter;
 
 export const Router = () => {
 	return (

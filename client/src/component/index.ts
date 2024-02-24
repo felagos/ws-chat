@@ -1,1 +1,2 @@
-export * from './Layout/Layout';
+export * from './Layout/PrivateLayout';
+export * from './Layout/PublicLayout';

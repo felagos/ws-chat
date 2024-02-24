@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-export const Layout = () => {
+export const PrivateLayout = () => {
 	return (
 		<div>
 			<Outlet />
