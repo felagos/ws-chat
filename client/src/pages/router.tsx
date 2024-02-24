@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { LoginPage, ChatPage, RegisterPage } from ".";
 import { RoutesEnum } from "../enum";
 import { Layout } from "../component";
+import { ProtectedRoute } from "./protected-route";
 
 const router = createBrowserRouter([
 	{
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: RoutesEnum.CHAT,
-				element: <ChatPage />,
+				element: <ProtectedRoute element={ChatPage} />,
 			},
 			{
 				path: RoutesEnum.REGISTER,
