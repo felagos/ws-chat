@@ -3,6 +3,7 @@ import { LoginPage, ChatPage, RegisterPage } from ".";
 import { RoutesEnum } from "../enum";
 import { Layout } from "../component";
 import { ProtectedRoute } from "./protected-route";
+import { PublicRoute } from "./public-route";
 
 const router = createBrowserRouter([
 	{
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: RoutesEnum.LOGIN,
-				element: <LoginPage />,
+				element: <PublicRoute element={LoginPage} />,
 			},
 			{
 				path: RoutesEnum.CHAT,
