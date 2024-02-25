@@ -7,9 +7,6 @@ export const LoginPage = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		localStorage.setItem('token', 'some token')
-
-		navigate(RoutesEnum.CHAT);
 	}
 
 	return (
