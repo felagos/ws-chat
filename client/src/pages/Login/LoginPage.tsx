@@ -7,6 +7,8 @@ export const LoginPage = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		navigate(RoutesEnum.CHAT);
 	}
 
 	return (
