@@ -1,3 +1,4 @@
+export * from './ChatSelect';
 export * from './InboxPeople';
 export * from './IncomingMessage';
 export * from './MessagesList';
