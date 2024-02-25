@@ -13,8 +13,7 @@ export const Router = () => {
           <Route path={RoutesEnum.REGISTER} element={<RegisterPage />} />
         </Route>
         <Route path="chat/*" element={<PrivateLayout />} >
-          <Route index element={<Navigate to={RoutesEnum.CHAT} replace />} />
-          <Route path={'chat'} element={<ChatPage />} />
+          <Route index element={<ChatPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

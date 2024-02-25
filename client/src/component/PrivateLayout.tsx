@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { RoutesEnum } from "../../enum";
-import { jwtIsExpired } from "../../helpers";
+import { RoutesEnum } from "../enum";
+import { jwtIsExpired } from "../helpers";
 
 export const PrivateLayout = () => {
 	const navigate = useNavigate();
@@ -15,8 +15,6 @@ export const PrivateLayout = () => {
 	}, [navigate]);
 
 	return (
-		<div>
-			<Outlet />
-		</div>
+		<Outlet />
 	);
 }
