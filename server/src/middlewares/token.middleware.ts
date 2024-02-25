@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { envs } from '../config/envs';
+import { RequestWithUid } from '../types';
 
 export const tokenValidation = async (req: Request, res: Response, next: NextFunction) => {
+	const request = req as RequestWithUid;
 	try {
 		const header = req.headers['authorization'];
 		if (!header) {
@@ -13,8 +15,8 @@ export const tokenValidation = async (req: Request, res: Response, next: NextFun
 
 		const [, token] = header.split(' ');
 
-		jwt.verify(token, envs.JWY_KEY);
-		//req.uid = uid;
+		const { uid } = jwt.verify(token, envs.JWY_KEY) as { uid: string };
+		request.uid = uid;
 
 		next();
 	} catch (error) {
