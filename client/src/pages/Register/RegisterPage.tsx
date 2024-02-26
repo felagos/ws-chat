@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../../enum";
 import { useState } from "react";
-import { doRegister } from "../../services";
+import { useAuthStore } from "../../store";
 
 export const RegisterPage = () => {
 	const navigate = useNavigate();
+	const doRegister = useAuthStore(state => state.doRegister);
 
 	const [form, setForm] = useState({
 		name: '',
@@ -22,9 +23,7 @@ export const RegisterPage = () => {
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const response = await doRegister(form.email, form.password, form.name);
-
-		localStorage.setItem('token', response.token);
+		await doRegister(form.email, form.password, form.name);
 
 		navigate(RoutesEnum.CHAT);
 	}

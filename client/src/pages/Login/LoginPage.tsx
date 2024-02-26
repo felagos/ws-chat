@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../../enum";
 import { useState } from "react";
-import { doLogin } from "../../services";
+import { useAuthStore } from "../../store";
 
 export const LoginPage = () => {
 	const navigate = useNavigate();
+	const doLogin = useAuthStore(state => state.doLogin);
 
 	const [form, setForm] = useState({
 		email: '',
@@ -21,10 +22,7 @@ export const LoginPage = () => {
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const response = await doLogin(form.email, form.password);
-
-		localStorage.setItem('token', response.token);
-		localStorage.setItem('user', JSON.stringify(response.user));
+		await doLogin(form.email, form.password);
 
 		navigate(RoutesEnum.CHAT);
 	}
