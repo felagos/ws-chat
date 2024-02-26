@@ -44,25 +44,18 @@ export const LoginPage = () => {
 				<span className="focus-input100"></span>
 			</div>
 
-			<div className="row mb-3">
-				<div className="col">
-					<input className="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
-					<label className="label-checkbox100">
-						Recordarme
-					</label>
-				</div>
-
-				<div className="col text-right">
-					<Link to={RoutesEnum.REGISTER} className="u-txt">
-						Nueva cuenta?
-					</Link>
-				</div>
-			</div>
-
 			<div className="container-login100-form-btn m-t-17">
 				<button className="login100-form-btn">
 					Ingresar
 				</button>
+			</div>
+
+			<div className="row mt-3">
+				<div className="col text-center">
+					<Link to={RoutesEnum.REGISTER} className="u-txt">
+						Nueva cuenta?
+					</Link>
+				</div>
 			</div>
 
 		</form>
