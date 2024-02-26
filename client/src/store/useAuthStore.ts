@@ -36,6 +36,4 @@ const storeApi: StateCreator<AuthState> = (set) => ({
 	},
 });
 
-export const useAuthStore = create<AuthState>()(
-	(storeApi)
-);
+export const useAuthStore = create<AuthState>()(storeApi);
