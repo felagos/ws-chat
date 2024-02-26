@@ -1,32 +1,13 @@
 import env from '../env';
+import { http } from '../http';
 import { AuthModel } from '../models';
 
 const API_URL = `${env.API_URL}/auth`;
 
 export const doLogin = async (email: string, password: string): Promise<AuthModel> => {
-	const resp = await fetch(`${API_URL}/login`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ email, password })
-	});
-
-	const data = await resp.json();
-
-	return data;
+	return await http.post<AuthModel>(`${API_URL}/login`, { email, password });
 }
 
 export const doRegister = async (email: string, password: string, name: string): Promise<AuthModel> => {
-	const resp = await fetch(`${API_URL}/new`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ email, password, name })
-	});
-
-	const data = await resp.json();
-
-	return data;
+	return await http.post<AuthModel>(`${API_URL}/new`, { email, password, name });
 }
