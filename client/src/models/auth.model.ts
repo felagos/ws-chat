@@ -1,6 +1,6 @@
 import { UserModel } from "./user.model";
 
-export interface LoginModel {
+export interface AuthModel {
 	user: UserModel;
 	token: string;
 }
