@@ -1,12 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../../enum";
+import { useState } from "react";
+import { doLogin } from "../../services";
 
 export const LoginPage = () => {
-
 	const navigate = useNavigate();
 
-	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const [form, setForm] = useState({
+		email: '',
+		password: '',
+	});
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setForm({
+			...form,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const response = await doLogin(form.email, form.password);
+
+		localStorage.setItem('token', response.token);
+		localStorage.setItem('user', JSON.stringify(response.user));
 
 		navigate(RoutesEnum.CHAT);
 	}
@@ -18,13 +36,13 @@ export const LoginPage = () => {
 			</span>
 
 			<div className="wrap-input100 validate-input mb-3">
-				<input className="input100" type="email" name="email" placeholder="Email" />
+				<input className="input100" type="email" name="email" placeholder="Email" onChange={onChange} />
 				<span className="focus-input100"></span>
 			</div>
 
 
 			<div className="wrap-input100 validate-input mb-3">
-				<input className="input100" type="password" name="password" placeholder="Password" />
+				<input className="input100" type="password" name="password" placeholder="Password" onChange={onChange} />
 				<span className="focus-input100"></span>
 			</div>
 
