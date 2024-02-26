@@ -8,6 +8,9 @@ overrides:
   vite@>=5.0.0 <=5.0.11: '>=5.0.12'
 
 dependencies:
+  jwt-decode:
+    specifier: ^4.0.0
+    version: 4.0.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -31,6 +34,9 @@ dependencies:
     version: 4.5.1(@types/react@18.2.56)(react@18.2.0)
 
 devDependencies:
+  '@types/jwt-decode':
+    specifier: ^3.1.0
+    version: 3.1.0
   '@types/react':
     specifier: ^18.2.43
     version: 18.2.56
@@ -759,6 +765,13 @@ packages:
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+    dev: true
+
+  /@types/jwt-decode@3.1.0:
+    resolution: {integrity: sha512-tthwik7TKkou3mVnBnvVuHnHElbjtdbM63pdBCbZTirCt3WAdM73Y79mOri7+ljsS99ZVwUFZHLMxJuJnv/z1w==}
+    deprecated: This is a stub types definition. jwt-decode provides its own type definitions, so you do not need this installed.
+    dependencies:
+      jwt-decode: 4.0.0
     dev: true
 
   /@types/prop-types@15.7.11:
@@ -1560,6 +1573,10 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
     dev: true
+
+  /jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
 
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
