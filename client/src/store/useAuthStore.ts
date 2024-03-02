@@ -7,6 +7,7 @@ interface AuthState {
 	token: string | null;
 	doLogin: (email: string, password: string) => Promise<void>;
 	doRegister: (email: string, password: string, name: string) => Promise<void>;
+	doLogout: () => void;
 }
 
 const storeApi: StateCreator<AuthState> = (set) => ({
@@ -34,6 +35,15 @@ const storeApi: StateCreator<AuthState> = (set) => ({
 		set({
 			user: response.user,
 			token: response.token,
+		});
+	},
+	doLogout: () => {
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+
+		set({
+			user: null,
+			token: null,
 		});
 	},
 });
