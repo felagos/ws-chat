@@ -1,33 +1,44 @@
-import { useEffect, useMemo, useState } from "react";
-import io from "socket.io-client";
+import { useCallback, useEffect, useState } from "react";
+import io, { Socket } from "socket.io-client";
 import env from "../env";
 import { SocketEvents } from "../enum";
 
-const connectSocket = (url: string) => {
-	return io(url);
-}
-
 export const useSocket = (url: string = env.SOCKET_URL) => {
-	const socket = useMemo(() => connectSocket(url), [url]);
+	const [socket, setSocket] = useState<Socket | null>(null);
 	const [isOnline, setIsOnline] = useState(false);
 
+	const connectSocket = useCallback(() => {
+		const socket = io(url, {
+			transports: ['websocket'],
+			autoConnect: true,
+			forceNew: true
+		});
+		setSocket(socket);
+	}, [url]);
+
+	const disconnectSocket = useCallback(() => {
+		socket?.disconnect();
+	}, [socket]);
+
 	useEffect(() => {
-		socket.on(SocketEvents.CONNECT, () => {
+		socket?.on(SocketEvents.CONNECT, () => {
 			setIsOnline(true);
 		});
 
-		socket.on(SocketEvents.DISCONNECT, () => {
+		socket?.on(SocketEvents.DISCONNECT, () => {
 			setIsOnline(false);
 		});
 
 		return () => {
-			socket.disconnect();
+			socket?.disconnect();
 		}
 
 	}, [socket]);
 
 	return {
-		socket,
+		connectSocket,
+		disconnectSocket,
+		socket: socket!,
 		isOnline
 	}
 }

@@ -1,8 +1,9 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useSocket } from "../hooks";
 import { Socket } from "socket.io-client";
+import env from "../env";
 
-const URL_SOCKET = "http://localhost:3000";
+const URL_SOCKET = env.SOCKET_URL;
 
 interface SocketContextProps {
 	socket: Socket;

@@ -13,6 +13,11 @@ export class Sockets {
 
 	socketEvents() {
 		this.io.on(SocketEvents.CONNECTION, (socket) => {
+
+			socket.on(SocketEvents.DISCONNECT, () => {
+				
+			});
+
 		});
 	}
 }
