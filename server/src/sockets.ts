@@ -37,9 +37,12 @@ export class Sockets {
 				return socket.disconnect();
 			}
 
+			const userOnline = await AuthService.updateOnlineStatus(user.uid, true);
+
 			console.log('Client connected', user.uid);
 
-			socket.on(SocketEvents.DISCONNECT, () => {
+			socket.on(SocketEvents.DISCONNECT, async () => {
+				await AuthService.updateOnlineStatus(user.uid, false);
 				console.log('Client disconnected', user.uid);
 			});
 

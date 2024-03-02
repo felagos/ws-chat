@@ -49,6 +49,13 @@ class AuthService {
 		return await EncryptHelper.compare(password, encryptedPassword);
 	}
 
+	updateOnlineStatus = async (uid: string, online: boolean) => {
+		const user = (await User.findById(uid))!;
+		user.online = online;
+		
+		return user.save();
+	}
+
 }
 
 export default new AuthService();
