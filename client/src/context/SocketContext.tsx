@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext } from "react";
 import { useSocket } from "../hooks";
 import { Socket } from "socket.io-client";
 import env from "../env";
@@ -8,6 +8,8 @@ const URL_SOCKET = env.SOCKET_URL;
 interface SocketContextProps {
 	socket: Socket;
 	isOnline: boolean;
+	connectSocket: () => void;
+	disconnectSocket: () => void;
 }
 
 interface Props {
@@ -16,14 +18,14 @@ interface Props {
 
 export const SocketContext = createContext({} as SocketContextProps);
 
-export const useSocketContext = () => useContext(SocketContext);
-
 export const SocketProvider = ({ children }: Props) => {
-	const { socket, isOnline } = useSocket(URL_SOCKET);
+	const { socket, isOnline, connectSocket, disconnectSocket } = useSocket(URL_SOCKET);
 
 	const value: SocketContextProps = {
 		socket,
 		isOnline,
+		connectSocket,
+		disconnectSocket
 	};
 
 	return (
