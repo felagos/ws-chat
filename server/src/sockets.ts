@@ -13,15 +13,15 @@ export class Sockets {
 		this.socketEvents();
 	}
 
-	private async validateToken(token: string) {
+	private async validateToken(token: string): Promise<[string, unknown?]> {
 
 		try {
 			const uid = JwtHelper.getUid(token);
-			const user = await AuthService.getUserById(uid);
+			await AuthService.getUserById(uid);
 
-			return user;
+			return [uid];
 		} catch (error) {
-			return null;
+			return ['', error];
 		}
 	}
 
@@ -30,14 +30,14 @@ export class Sockets {
 
 			const token = socket.handshake.query.token as string;
 
-			const user = await this.validateToken(token);
+			const [uid, error] = await this.validateToken(token);
 
-			if (!user) {
+			if (error) {
 				console.log('Client not authenticated');
 				return socket.disconnect();
 			}
 
-			const userOnline = await AuthService.updateOnlineStatus(user.uid, true);
+			const user = await AuthService.updateOnlineStatus(uid, true);
 
 			console.log('Client connected', user.uid);
 

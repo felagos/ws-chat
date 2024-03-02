@@ -53,7 +53,11 @@ class AuthService {
 		const user = (await User.findById(uid))!;
 		user.online = online;
 		
-		return user.save();
+		return {
+			email: user.email,
+			name: user.name,
+			uid: user._id.toString()
+		};
 	}
 
 }
