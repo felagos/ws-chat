@@ -47,6 +47,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 			return;
 		}
 
+		delete user.password;
+
 		res.status(200).json({
 			user,
 			token: JwtHelper.generateToken(user),

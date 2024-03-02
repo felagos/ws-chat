@@ -13,7 +13,9 @@ const fetchWithHeaders = async <T>(url: string, options: RequestInit = {}): Prom
 		};
 	}
 
-	return fetch(url, options) as T;
+	const response = await fetch(url, options);
+
+	return response.json() as Promise<T>;
 };
 
 const get = <T>(url: string, options: RequestInit = {}): Promise<T> =>

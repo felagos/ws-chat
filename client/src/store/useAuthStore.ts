@@ -15,6 +15,8 @@ const storeApi: StateCreator<AuthState> = (set) => ({
 	doLogin: async (email: string, password: string) => {
 		const response = await doLogin(email, password);
 
+		console.log('response', response);
+
 		localStorage.setItem('token', response.token);
 		localStorage.setItem('user', JSON.stringify(response.user));
 
