@@ -8,9 +8,6 @@ const URL_SOCKET = env.SOCKET_URL;
 
 interface SocketContextProps {
 	socket: Socket;
-	isOnline: boolean;
-	connectSocket: () => void;
-	disconnectSocket: () => void;
 }
 
 interface Props {
@@ -21,19 +18,22 @@ export const SocketContext = createContext({} as SocketContextProps);
 
 export const SocketProvider = ({ children }: Props) => {
 	const user = useAuthStore(state => state.user);
-	const { socket, isOnline, connectSocket, disconnectSocket } = useSocket(URL_SOCKET);
+	const { socket, connectSocket, disconnectSocket } = useSocket(URL_SOCKET);
 
 	useEffect(() => {
-		const socketCB = user ? connectSocket : disconnectSocket;
-		
-		socketCB();
-	}, [connectSocket, disconnectSocket, user]);
+		if (user) {
+			connectSocket();
+		}
+	}, [user, connectSocket]);
+
+	useEffect(() => {
+		if (!user) {
+			disconnectSocket();
+		}
+	}, [user, disconnectSocket]);
 
 	const value: SocketContextProps = {
 		socket,
-		isOnline,
-		connectSocket,
-		disconnectSocket
 	};
 
 	return (

@@ -14,8 +14,10 @@ export class Sockets {
 	socketEvents() {
 		this.io.on(SocketEvents.CONNECTION, (socket) => {
 
+			console.log('Client connected', socket.id);
+
 			socket.on(SocketEvents.DISCONNECT, () => {
-				
+				console.log('Client disconnected', socket.id);
 			});
 
 		});
