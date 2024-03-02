@@ -1,5 +1,7 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { SocketEvents } from "./enum";
+import { JwtHelper } from "./helpers";
+import { AuthService } from "./services";
 
 export class Sockets {
 
@@ -11,13 +13,34 @@ export class Sockets {
 		this.socketEvents();
 	}
 
-	socketEvents() {
-		this.io.on(SocketEvents.CONNECTION, (socket) => {
+	private async validateToken(token: string) {
 
-			console.log('Client connected', socket.id);
+		try {
+			const uid = JwtHelper.getUid(token);
+			const user = await AuthService.getUserById(uid);
+
+			return user;
+		} catch (error) {
+			return null;
+		}
+	}
+
+	socketEvents() {
+		this.io.on(SocketEvents.CONNECTION, async (socket) => {
+
+			const token = socket.handshake.query.token as string;
+
+			const user = await this.validateToken(token);
+
+			if (!user) {
+				console.log('Client not authenticated');
+				return socket.disconnect();
+			}
+
+			console.log('Client connected', user.uid);
 
 			socket.on(SocketEvents.DISCONNECT, () => {
-				console.log('Client disconnected', socket.id);
+				console.log('Client disconnected', user.uid);
 			});
 
 		});

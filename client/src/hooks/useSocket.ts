@@ -6,11 +6,15 @@ export const useSocket = (url: string = env.SOCKET_URL) => {
 	const [socket, setSocket] = useState<Socket | null>(null);
 
 	const connectSocket = useCallback(() => {
+		const token = localStorage.getItem('token');
+
 		const mewSocket = io(url, {
 			transports: ['websocket'],
-			autoConnect: false,
-			forceNew: true
+			autoConnect: true,
+			forceNew: true,
+			query: { token }
 		});
+		
 		setSocket(mewSocket);
 	}, [url]);
 

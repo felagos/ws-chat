@@ -9,6 +9,12 @@ class JwtHelper {
 		});
 	}
 
+	getUid(token: string) {
+		const data = jwt.verify(token, envs.JWY_KEY) as { uid: string };
+
+		return data.uid ?? '';
+	}
+
 }
 
 export default new JwtHelper();
