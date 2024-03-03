@@ -7,7 +7,8 @@
     "install:all": "pnpm i && concurrently \"pnpm i --prefix ./client\" \"pnpm i --prefix ./server\"",
     "start:client": "pnpm --prefix ./client dev",
     "start:server": "pnpm --prefix ./server dev",
-    "start:bd": "docker compose up -d"
+    "start:bd": "docker compose up -d",
+    "start:all": "concurrently \"pnpm start:client\" \"pnpm start:server\""
   },
   "keywords": [],
   "author": "",
