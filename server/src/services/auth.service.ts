@@ -8,7 +8,8 @@ class AuthService {
 		const userMapped: UserDto = {
 			email: user.email,
 			name: user.name,
-			uid: user._id.toString()
+			uid: user._id.toString(),
+			online: user.online
 		};
 
 		if (withPassword) {

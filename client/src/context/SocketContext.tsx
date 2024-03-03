@@ -38,9 +38,9 @@ export const SocketProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		socket?.on(SocketEvents.LIST_USERS, (users: UserModel[]) => {
-			setUser(users);
+			setUser(users.filter(u => u.uid !== user?.uid));
 		});
-	}, [socket, setUser]);
+	}, [socket, setUser, user?.uid]);
 
 	const value: SocketContextProps = {
 		socket,

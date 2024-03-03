@@ -7,6 +7,7 @@ interface ChatState {
 	users: UserModel[];
 	messages: string[];
 	setUsers: (user: UserModel[]) => void;
+	cleanChat: () => void;
 }
 
 const storeApi: StateCreator<ChatState> = (set) => ({
@@ -15,6 +16,7 @@ const storeApi: StateCreator<ChatState> = (set) => ({
 	users: [],
 	messages: [],
 	setUsers: (users) => set({ users }),
+	cleanChat: () => set({ messages: [], activeChat: '', users: [], uuid: '' }),
 });
 
 export const useChatStore = create<ChatState>()(storeApi);

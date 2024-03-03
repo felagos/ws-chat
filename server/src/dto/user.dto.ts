@@ -3,4 +3,5 @@ export interface UserDto {
 		name: string;
 		uid: string;
 		password?: string;
+		online?: boolean;
 }

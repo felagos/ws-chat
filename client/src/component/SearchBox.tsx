@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../enum";
-import { useAuthStore } from "../store";
+import { useAuthStore, useChatStore } from "../store";
 
 export const SearchBox = () => {
 	const navigate = useNavigate();
 
 	const doLogout = useAuthStore((state) => state.doLogout);
+	const cleanChat = useChatStore((state) => state.cleanChat);
 
 	const onExit = () => {
 		doLogout();
+		cleanChat();
+
 		navigate(RoutesEnum.LOGIN);
 	};
 
