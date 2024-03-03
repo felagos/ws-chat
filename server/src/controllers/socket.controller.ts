@@ -4,7 +4,7 @@ import { AuthService } from "../services"
 class SocketController {
 
 	async listAllUsers() {
-		await AuthService.findAllUsers()
+		return await AuthService.findAllUsers()
 	}
 
 	async connectUser(uid: string) {
