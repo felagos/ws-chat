@@ -8,7 +8,7 @@ interface Props {
 export const SideBarChat = ({ user }: Props) => {
 
 	return (
-		<div className="chat_list active_chat">
+		<div className="chat_list">
 			<div className="chat_people">
 				<div className="chat_img">
 					<img src="https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=256" alt="sunil" />
