@@ -1,7 +1,6 @@
 import { StateCreator, create } from "zustand";
 import { UserModel } from "../models";
 
-
 interface ChatState {
 	uuid: string;
 	activeChat: string;
