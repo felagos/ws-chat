@@ -41,6 +41,8 @@ export class Sockets {
 
 			console.log('Client connected', user.uid);
 
+			this.io.emit(SocketEvents.LIST_USERS, await AuthService.findAllUsers());
+
 			socket.on(SocketEvents.DISCONNECT, async () => {
 				await AuthService.updateOnlineStatus(user.uid, false);
 				console.log('Client disconnected', user.uid);

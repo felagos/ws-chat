@@ -1,4 +1,5 @@
 export const enum SocketEvents {
-	CONNECT = 'connect',
+	CONNECTION = 'connection',
 	DISCONNECT = 'disconnect',
+	LIST_USERS = 'list-users',
 }
