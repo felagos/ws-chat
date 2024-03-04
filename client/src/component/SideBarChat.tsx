@@ -1,6 +1,6 @@
 import { UserModel } from "../models";
 import { useChatStore } from "../store";
-import cn from "classnames";
+import clsx from "clsx";
 
 interface Props {
 	user: UserModel;
@@ -14,10 +14,7 @@ export const SideBarChat = ({ user }: Props) => {
 	const onSelectChat = () => selectChat(user.uid);
 
 	return (
-		<div className={
-			cn("chat_list", {
-				"active_chat": user.uid === selectedChat
-			})
+		<div className={clsx("chat_list", { "active_chat": selectedChat === user.uid })
 		} onClick={onSelectChat}>
 			<div className="chat_people">
 				<div className="chat_img">
