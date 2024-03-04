@@ -2,21 +2,27 @@ import { StateCreator, create } from "zustand";
 import { UserModel } from "../models";
 
 interface ChatState {
-	uuid: string;
-	activeChat: string;
+	uid: string;
+	selectedChat: string;
 	users: UserModel[];
 	messages: string[];
 	setUsers: (user: UserModel[]) => void;
+	selectChat: (uid: string) => void;
 	cleanChat: () => void;
 }
 
-const storeApi: StateCreator<ChatState> = (set) => ({
-	uuid: '',
-	activeChat: '',
+const storeApi: StateCreator<ChatState> = (set, get) => ({
+	uid: '',
+	selectedChat: '',
 	users: [],
 	messages: [],
 	setUsers: (users) => set({ users }),
-	cleanChat: () => set({ messages: [], activeChat: '', users: [], uuid: '' }),
+	selectChat: (uid) => {
+		if (get().selectedChat !== uid) {
+			set({ selectedChat: uid, messages: [] });
+		}
+	},
+	cleanChat: () => set({ messages: [], selectedChat: '', users: [], uid: '' }),
 });
 
 export const useChatStore = create<ChatState>()(storeApi);

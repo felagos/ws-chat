@@ -2,16 +2,14 @@ import { ChatSelect, InboxPeople, MessagesList } from "../../component"
 import { useChatStore } from "../../store";
 
 export const ChatPage = () => {
-	const activeChat = useChatStore(state => state.activeChat);
+	const selectedChat = useChatStore(state => state.selectedChat);
 
 	return (
 		<div className="messaging">
 			<div className="inbox_msg">
 				<InboxPeople />
 
-				<ChatSelect />
-
-				{activeChat ? <MessagesList /> : null}
+				{selectedChat ? <MessagesList /> : <ChatSelect />}
 			</div>
 		</div>
 	);
