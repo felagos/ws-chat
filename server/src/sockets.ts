@@ -1,6 +1,8 @@
 import { Server } from "socket.io";
 import { SocketEvents } from "./enum";
 import { SocketController } from "./controllers";
+import { MessageDto } from "./dto";
+import { MessageService } from "./services";
 
 export class Sockets {
 
@@ -28,12 +30,19 @@ export class Sockets {
 
 			console.log('Client connected', user.uid);
 
+			socket.join(user.uid);
+
 			this.io.emit(SocketEvents.LIST_USERS, await SocketController.listAllUsers());
 
 			socket.on(SocketEvents.DISCONNECT, async () => {
 				await SocketController.disconnectUser(uid);
 
 				this.io.emit(SocketEvents.LIST_USERS, await SocketController.listAllUsers());
+			});
+
+			socket.on(SocketEvents.PRIVATE_MESSAGE, async (message: MessageDto) => {
+				console.log('Message received', message);
+				await MessageService.saveMessage(message);
 			});
 
 		});

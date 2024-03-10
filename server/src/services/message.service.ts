@@ -19,6 +19,18 @@ class MessageService {
 			message: message.message,
 			createdAt: message.createdAt.toDateString(),
 		}));
+	
+	}
+
+	async saveMessage(message: MessageDto): Promise<MessageDto>  {
+		const newMessage = new Message(message);
+		await newMessage.save();
+		return {
+			from: newMessage.from._id.toString(),
+			to: newMessage.to._id.toString(),
+			message: newMessage.message,
+			createdAt: newMessage.createdAt.toDateString(),
+		};
 	}
 
 }
