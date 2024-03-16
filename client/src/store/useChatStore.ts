@@ -1,14 +1,15 @@
 import { StateCreator, create } from "zustand";
-import { UserModel } from "../models";
+import { PrivateMessage, UserModel } from "../models";
 
 interface ChatState {
 	uid: string;
 	selectedChat: string;
 	users: UserModel[];
-	messages: string[];
+	messages: PrivateMessage[];
 	setUsers: (user: UserModel[]) => void;
 	selectChat: (uid: string) => void;
 	cleanChat: () => void;
+	addMessage: (message: PrivateMessage) => void;
 }
 
 const storeApi: StateCreator<ChatState> = (set, get) => ({
@@ -19,10 +20,11 @@ const storeApi: StateCreator<ChatState> = (set, get) => ({
 	setUsers: (users) => set({ users }),
 	selectChat: (uid) => {
 		if (get().selectedChat !== uid) {
-			set({ selectedChat: uid, messages: [] });
+			set({ selectedChat: uid });
 		}
 	},
 	cleanChat: () => set({ messages: [], selectedChat: '', users: [], uid: '' }),
+	addMessage: (message) => set(state => ({ messages: [...state.messages, message] })),
 });
 
 export const useChatStore = create<ChatState>()(storeApi);

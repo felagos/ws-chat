@@ -4,7 +4,7 @@ import { Socket } from "socket.io-client";
 import env from "../env";
 import { useAuthStore, useChatStore } from "../store";
 import { SocketEvents } from "../enum";
-import { UserModel } from "../models";
+import { PrivateMessage, UserModel } from "../models";
 
 const URL_SOCKET = env.SOCKET_URL;
 
@@ -21,6 +21,7 @@ export const SocketContext = createContext({} as SocketContextProps);
 export const SocketProvider = ({ children }: Props) => {
 	const user = useAuthStore(state => state.user);
 	const setUser = useChatStore(state => state.setUsers);
+	const addMessage = useChatStore(state => state.addMessage);
 
 	const { socket, connectSocket, disconnectSocket } = useSocket(URL_SOCKET);
 
@@ -41,6 +42,13 @@ export const SocketProvider = ({ children }: Props) => {
 			setUser(users.filter(u => u.uid !== user?.uid));
 		});
 	}, [socket, setUser, user?.uid]);
+
+	useEffect(() => {
+		socket?.on(SocketEvents.PRIVATE_MESSAGE, (message: PrivateMessage) => {
+			console.log('message', message);
+			addMessage(message);
+		})
+	}, [socket, addMessage]);
 
 	const value: SocketContextProps = {
 		socket,

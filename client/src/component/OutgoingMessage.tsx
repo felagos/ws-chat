@@ -1,11 +1,16 @@
-export const OutgoingMessage = () => {
+import { PrivateMessage } from "../models";
+
+interface Props {
+	message: PrivateMessage
+}
+
+export const OutgoingMessage = ({ message }: Props) => {
 
 	return (
 		<div className="outgoing_msg">
 			<div className="sent_msg">
-				{/* <p>Test which is a new approach to have all
-					solutions</p>
-				<span className="time_date"> 11:01 AM | June 9</span> */}
+				<p>{message.message}</p>
+				<span className="time_date">{message.createdAt}</span>
 			</div>
 		</div>
 	);

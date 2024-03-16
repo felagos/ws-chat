@@ -41,8 +41,8 @@ export class Sockets {
 			});
 
 			socket.on(SocketEvents.PRIVATE_MESSAGE, async (message: MessageDto) => {
-				console.log('Message received', message);
-				await MessageService.saveMessage(message);
+				const newMessage = await MessageService.saveMessage(message);
+				this.io.to(message.to).emit(SocketEvents.PRIVATE_MESSAGE, newMessage);
 			});
 
 		});
