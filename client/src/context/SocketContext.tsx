@@ -45,7 +45,6 @@ export const SocketProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		socket?.on(SocketEvents.PRIVATE_MESSAGE, (message: PrivateMessage) => {
-			console.log('message', message);
 			addMessage(message);
 		})
 	}, [socket, addMessage]);
